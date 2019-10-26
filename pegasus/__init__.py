@@ -1,6 +1,7 @@
 from flask import Flask, g
 from configparser import ConfigParser
 import os
+from flask_cors import CORS
 
 
 def create_app():
@@ -12,7 +13,7 @@ def create_app():
 
     from pegasus.config import Config
     app.config.from_object(Config)
-
+    CORS(app)
 
 
 
@@ -25,7 +26,7 @@ def create_app():
 
     from pegasus.apiv1 import parking
 
-    @app.route('/)')
+    @app.route('/')
     def hello_page():
         return 'Hell'
 

@@ -1,6 +1,3 @@
 flask
-SQLAlchemy
-Flask-SQLAlchemy
+flask-cors
 requests
-Flask-Migrate
-gunicorn

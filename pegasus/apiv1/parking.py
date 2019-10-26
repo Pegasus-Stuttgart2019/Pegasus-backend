@@ -27,8 +27,8 @@ def find_best_parking():
                 "description": "This parkingspcase is an alternativ" ,
             })
         count += 1
-    response.data = { "data": response_data }
-    response.headers = {
+    
+    headers = {
         'Access-Control-Allow-Origin': '*'
     } 
-    return response
+    return ({ "data": response_data }, headers )
