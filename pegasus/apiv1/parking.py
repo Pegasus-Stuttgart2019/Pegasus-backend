@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, g, redirect, request, session, current_app
 import time
-bp = Blueprint('apv1', __name__, url_prefix='/apvi')
+bp = Blueprint('apv1', __name__, url_prefix='/apiv1')
 
 @bp.route('/parking')
 def hello():
