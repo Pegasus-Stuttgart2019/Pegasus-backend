@@ -1,11 +1,12 @@
 from flask import Blueprint, flash, g, redirect, request, session, current_app
-from pegasus.external_services import airport_legacy
- 
+import time
 bp = Blueprint('parking', __name__, url_prefix='/')
 
 @bp.route('/')
 def hello():
     
-    test = airport_legacy.Airport_legacy(current_app.config, current_app.logger)
+    from pegasus.models.parking import ParkingData
+    print("geting csv data")
+    test = ParkingData()
     
-    return  test._send_request('/Airlines/Get').json()[1]
+    return str(test.keys)

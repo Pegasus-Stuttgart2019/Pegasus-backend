@@ -1,7 +1,7 @@
 import requests
 
 
-class Airport_legacy:
+class Airport:
 
     def __init__(self, config, logger):
         self.base_url = config["LEGACYURL"]
@@ -9,15 +9,17 @@ class Airport_legacy:
         self._session = requests.Session()
         self._logger = logger
 
-    def _send_request(self, url_extension, params=None):
+    def _send_request(self, url_extension, method="get", params=None):
         headers = {
             # Request headers
             "Ocp-Apim-Subscription-Key": self.apikey
         }
 
-        response = self._session.get(
-            self.base_url + url_extension, params=params, headers=headers
-        )
+        if method == "get":
+            response = self._session.get(
+                self.base_url + url_extension, params=params, headers=headers
+            )
+
 
         if response.status_code != 200:
             self._logger.error(

@@ -1,6 +1,5 @@
 from flask import Flask, g
 from configparser import ConfigParser
-from flask_sqlalchemy import SQLAlchemy
 import os
 
 
@@ -16,16 +15,14 @@ def create_app():
     air_config = config["Airport"]
     app.config.from_mapping(
         SECRET_KEY=app_config["SECRET_KEY"],
-        SQLALCHEMY_DATABASE_URI=app_config["DATABASE"],
         APIKEY=air_config["apikey"],
         LEGACYURL=air_config["legacyUrl"],
         FLIGTHSTATEURL=air_config["fligthStateUrl"],
         WEATHERURL=air_config["weatherUrl"],
     )
-    # connect to db
-    db = SQLAlchemy()
-    db.init_app(app)
 
+
+    
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
