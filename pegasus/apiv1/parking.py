@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, g, redirect, request, session, current_app
+from flask import Blueprint, flash, g, redirect, request, session, current_app,Response
 import time
 from pegasus.models.parking import ParkingData
 bp = Blueprint('apv1', __name__, url_prefix='/apiv1')
@@ -7,13 +7,13 @@ bp = Blueprint('apv1', __name__, url_prefix='/apiv1')
 def find_best_parking():
     
     parking_data = ParkingData()
-    
+    response = Response()
     parkingspace =  parking_data.find_best_parkingspace((10,25),1)
-    response = []
+    response_data = []
 
     best_parking, walktime = parkingspace[0]
     alternatives = parkingspace[1]
-    response.append({
+    response_data.append({
         "name":str(best_parking),
         "value": str(walktime),
         "description": "This parkingspcase has the shorstest walking time to your Terminal" ,
@@ -21,11 +21,14 @@ def find_best_parking():
     count = 0
     for alt in alternatives:
         if count < 3:
-            response.append({
+            response_data.append({
                 "name":str(alt[0]),
                 "value": str(alt[1]),
                 "description": "This parkingspcase is an alternativ" ,
             })
         count += 1
-    
-    return { "data": response }
+    response.data = { "data": response_data }
+    response.headers = {
+        'Access-Control-Allow-Origin': '*'
+    } 
+    return response
