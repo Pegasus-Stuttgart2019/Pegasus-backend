@@ -1,8 +1,8 @@
 from flask import Blueprint, flash, g, redirect, request, session, current_app
 import time
-bp = Blueprint('parking', __name__, url_prefix='/')
+bp = Blueprint('apv1', __name__, url_prefix='/apvi')
 
-@bp.route('/')
+@bp.route('/parking')
 def hello():
     
     from pegasus.models.parking import ParkingData
