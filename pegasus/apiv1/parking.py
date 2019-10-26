@@ -97,7 +97,7 @@ def current_fligth():
         return "success"
 
 from pegasus.external_services.destinations import Destionations
-@bp.route('/test')
+@bp.route('/destinations')
 def airlines():
     input = str(request.args.get('input'))
     if input == None:
@@ -110,3 +110,11 @@ def airlines():
         data = air.getDestinationName(input)
 
     return { "data": data }
+
+from pegasus.external_services.shops import Shops
+
+@bp.route('/recomend')
+def recomend():
+    shop = Shops(current_app.config, current_app.logger)
+
+    return { "data": shop.get_recomendation() }
