@@ -1,1 +1,1 @@
-web: FLASK_APP=pegasus ./startprod.sh
+web: flask run --host=0.0.0.0 --port=$port
