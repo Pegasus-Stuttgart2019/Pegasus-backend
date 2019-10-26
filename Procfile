@@ -1,1 +1,1 @@
-web: gunicorn run:pegasus
+web: FLASK_APP=pegasus python -m flask run --host=0.0.0.0 --port=$port
