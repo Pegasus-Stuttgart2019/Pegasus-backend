@@ -18,6 +18,7 @@ def find_best_parking():
         "name":str(best_parking),
         "value": str(walktime),
         "description": "This parkingspcase has the shorstest walking time to your Terminal" ,
+        "topic": "P",
     })
     count = 0
     for alt in alternatives:
@@ -26,6 +27,7 @@ def find_best_parking():
                 "name": str(f"P{random.randint(10,20)}"),  #str(alt[0]),
                 "value": str(alt[1]),
                 "description": "This parkingspcase is an alternativ" ,
+                "topic": "P", 
             })
         count += 1
     
