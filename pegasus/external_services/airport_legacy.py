@@ -2,8 +2,9 @@ import requests
 
 
 class Airport:
-
+    """config: logger"""
     def __init__(self, config, logger):
+
         self.base_url = config["LEGACYURL"]
         self.apikey = config["APIKEY"]
         self._session = requests.Session()

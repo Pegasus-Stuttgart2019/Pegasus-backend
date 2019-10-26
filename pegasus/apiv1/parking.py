@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, g, redirect, request, session, current_app,Response
+from flask import Blueprint, flash, g, redirect, request, session, current_app
 import random
 import time
 from pegasus.models.parking import ParkingData
@@ -33,3 +33,24 @@ def find_best_parking():
         'Access-Control-Allow-Origin': '*'
     } 
     return ({ "data": response_data }, headers )
+
+from pegasus.external_services.airport_legacy import Airport
+
+
+@bp.route('/waiting')
+def terminal_waiting():
+    
+    api = Airport(current_app.config, current_app.logger)
+
+    response = api._send_request('/Apps/AirportSTR/SecurityCheckpoints/GetWaitTimes')
+
+    if response.status_code != 200: 
+        output = { "data": [] }
+    else:
+        output =  response.json()
+    
+    
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    } 
+    return ( { "data": output }, headers )
