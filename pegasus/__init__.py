@@ -8,7 +8,7 @@ def create_app():
     # create application
     app = Flask(__name__, instance_relative_config=True)
     # read in config
-
+    print("helo world")
 
     from pegasus.config import Config
     app.config.from_object(Config)
