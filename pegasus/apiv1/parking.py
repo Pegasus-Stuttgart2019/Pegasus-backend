@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, g, redirect, request, session, current_app
 import random
-import time
+import datetime
 from pegasus.models.parking import ParkingData
 bp = Blueprint('apv1', __name__, url_prefix='/apiv1')
 
@@ -55,3 +55,17 @@ def terminal_waiting():
     } 
     return ( { "data": output }, headers )
 
+from pegasus.external_services.departuers import Departures
+
+@bp.route('/fligthid')
+def get_fligth_by_id():
+    fligth_id = int(request.args.get('id'))
+    print(fligth_id)
+    departures = Departures(current_app.config, current_app.logger)
+
+    fligth = departures.getDeparturesById(fligth_id)
+
+    return fligth
+
+
+    

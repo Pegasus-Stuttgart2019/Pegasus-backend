@@ -8,8 +8,8 @@ class Airport:
         self.base_url = config["LEGACYURL"]
         self.apikey = config["APIKEY"]
         self._session = requests.Session()
-        self._logger = logger
 
+        self._logger = logger
     def _send_request(self, url_extension, method="get", params=None):
         headers = {
             # Request headers
