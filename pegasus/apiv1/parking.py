@@ -1,12 +1,31 @@
 from flask import Blueprint, flash, g, redirect, request, session, current_app
 import time
+from pegasus.models.parking import ParkingData
 bp = Blueprint('apv1', __name__, url_prefix='/apiv1')
 
-@bp.route('/parking')
-def hello():
+@bp.route('/parkingfind')
+def find_best_parking():
     
-    from pegasus.models.parking import ParkingData
-    print("geting csv data")
-    test = ParkingData()
+    parking_data = ParkingData()
     
-    return str(test.keys)
+    parkingspace =  parking_data.find_best_parkingspace((10,25),1)
+    response = []
+
+    best_parking, walktime = parkingspace[0]
+    alternatives = parkingspace[1]
+    response.append({
+        "name":str(best_parking),
+        "value": str(walktime),
+        "description": "This parkingspcase has the shorstest walking time to your Terminal" ,
+    })
+    count = 0
+    for alt in alternatives:
+        if count < 3:
+            response.append({
+                "name":str(alt[0]),
+                "value": str(alt[1]),
+                "description": "This parkingspcase is an alternativ" ,
+            })
+        count += 1
+    
+    return { "data": response }
