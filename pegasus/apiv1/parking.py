@@ -64,11 +64,32 @@ def get_fligth_by_id():
     except ValueError:
         fligth_id = request.args.get('id')
     
-    print(fligth_id)
     departures = Departures(current_app.config, current_app.logger)
 
     fligth = departures.getDeparturesById(fligth_id)
     if fligth_id != None:
         return fligth
 
-    
+from pegasus.apiv1.current_fligth import set_current_fligth, remove_current_fligth
+
+@bp.route('/fligthstate', methods=['GET', 'DELETE'])
+def current_fligth():
+    if request.method == "POST":
+
+        return "success"
+    if request.method == "GET":
+        fligth_id  = request.args.get('id')
+        try:
+            fligth_id = int(fligth_id)
+        except ValueError:
+            pass
+        except TypeError:
+            pass
+        if fligth_id != None:
+            set_current_fligth(fligth_id)
+        return { "fligth_id": current_app.fligth_id}
+
+    if request.method == "DELETE":
+        print("deleting")
+        remove_current_fligth()
+        return "success"
