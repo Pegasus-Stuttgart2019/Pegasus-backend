@@ -23,8 +23,8 @@ def find_best_parking():
     for alt in alternatives:
         if count < 3:
             response_data.append({
-                "name":str(alt[0]),
-                "value": random.randint(0,20), #str(alt[1]),
+                "name": str(f"P{random.randint(10,20)}"),  #str(alt[0]),
+                "value": str(alt[1]),
                 "description": "This parkingspcase is an alternativ" ,
             })
         count += 1
@@ -54,3 +54,4 @@ def terminal_waiting():
         'Access-Control-Allow-Origin': '*'
     } 
     return ( { "data": output }, headers )
+
