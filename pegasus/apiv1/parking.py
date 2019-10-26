@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, g, redirect, request, session, current_app,Response
+import random
 import time
 from pegasus.models.parking import ParkingData
 bp = Blueprint('apv1', __name__, url_prefix='/apiv1')
@@ -7,7 +8,7 @@ bp = Blueprint('apv1', __name__, url_prefix='/apiv1')
 def find_best_parking():
     
     parking_data = ParkingData()
-    response = Response()
+
     parkingspace =  parking_data.find_best_parkingspace((10,25),1)
     response_data = []
 
@@ -23,7 +24,7 @@ def find_best_parking():
         if count < 3:
             response_data.append({
                 "name":str(alt[0]),
-                "value": str(alt[1]),
+                "value": random.randint(0,20), #str(alt[1]),
                 "description": "This parkingspcase is an alternativ" ,
             })
         count += 1
