@@ -59,13 +59,16 @@ from pegasus.external_services.departuers import Departures
 
 @bp.route('/fligthid')
 def get_fligth_by_id():
-    fligth_id = int(request.args.get('id'))
+    try:
+        fligth_id = int(request.args.get('id'))
+    except ValueError:
+        fligth_id = request.args.get('id')
+    
     print(fligth_id)
     departures = Departures(current_app.config, current_app.logger)
 
     fligth = departures.getDeparturesById(fligth_id)
-
-    return fligth
-
+    if fligth_id != None:
+        return fligth
 
     

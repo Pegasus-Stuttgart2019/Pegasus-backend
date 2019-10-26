@@ -12,7 +12,9 @@ class Departures(Airport):
         for departure in self.departures:
             if departure['AmsId'] == id:
                 return departure
-        
+            if departure['Name'] == id or departure['Name'].replace(" ", "") == id:
+                return departure
+        return "False"
 
     def getDeparturesInSpan(self, startTime, endTime, pagesize=2000, page=1):
         """Taks to timestamps and returns arriving fligths between them"""
