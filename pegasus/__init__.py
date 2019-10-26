@@ -25,6 +25,10 @@ def create_app():
 
     from pegasus.apiv1 import parking
 
+    @app.route('/)')
+    def hello_page():
+        return 'Hell'
+
     app.register_blueprint(parking.bp)
 
     return app
