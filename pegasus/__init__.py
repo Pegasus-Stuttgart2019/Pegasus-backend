@@ -15,7 +15,7 @@ def create_app():
     from pegasus.config import Config
     app.config.from_object(Config)
     CORS(app)
-    app.fligth_id = 2895621
+    app.fligth_id = ""
 
 
     
