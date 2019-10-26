@@ -93,3 +93,18 @@ def current_fligth():
         print("deleting")
         remove_current_fligth()
         return "success"
+
+from pegasus.external_services.destinations import Destionations
+@bp.route('/test')
+def airlines():
+    input = str(request.args.get('input'))
+    if input == None:
+        return { "Code": "" }
+    
+    air = Destionations(current_app.config, current_app.logger)
+    if len(input) <= 3:
+        data = air.getDestinationCode(input)    
+    else:
+        data = air.getDestinationName(input)
+
+    return { "data": data }

@@ -6,7 +6,7 @@ class Departures(Airport):
     def __init__(self, config, logger):
         super().__init__(config, logger)
         self.time = datetime.datetime.now().timestamp()
-        self.departures = self.getDeparturesInSpan(self.time, self.time+2000)
+        self.departures = self.getDeparturesInSpan(self.time-1000, self.time+2000)
 
     def getDeparturesById(self, id):
         for departure in self.departures:
