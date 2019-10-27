@@ -151,7 +151,7 @@ def get_parking_data_and_format(dest):
         if count < 3:
             response_data.append(
                 {
-                    "name": str(f"P{random.randint(10,20)}"),  # str(alt[0]),
+                    "name": str(alt[0]),
                     "value": f"{str(alt[1])} minutes by feet.",
                     "description": "This parking lot is an alternativ",
                     "fligth_dest": dest,
@@ -184,7 +184,7 @@ def find_best_parking2():
         dest = dest.getDestinationCode(fligth["Destination"]["Code"])
     else:
         dest = {}
-        
+
     response_data = []
     try:
         
