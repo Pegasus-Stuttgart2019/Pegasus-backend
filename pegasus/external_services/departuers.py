@@ -6,7 +6,7 @@ from operator import itemgetter
 class Departures(Airport):
     def __init__(self, config, logger):
         super().__init__(config, logger)
-        self.time = datetime.datetime.now().timestamp()
+        self.time = datetime.datetime.now().timestamp() 
         self.departures = self.getDeparturesInSpan(self.time, self.time + 2000)
 
     def getDeparturesById(self, id):
@@ -35,7 +35,7 @@ class Departures(Airport):
         return response.json()["Items"]
 
     def nextFlightTo(self, destCode):
-        self.time = datetime.datetime.now().timestamp()
+        self.time + 3600
         self.departures = self.getDeparturesInSpan(self.time, self.time + 20000)
         flights = []
         maps = {}
