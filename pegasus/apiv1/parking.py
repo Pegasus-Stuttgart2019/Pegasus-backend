@@ -193,7 +193,7 @@ def find_best_parking2():
             format_response(
                 dep["Name"],
                 dep["Plan"],
-                f"Your Flight to {str(dep['Destination']['Name']).lower().capitalize()  } it will leave at {str(datetime.datetime.strptime(dep['Plan'], '%Y-%m-%dT%H:%M:%S' ).time())[0:5]} Uhr.",
+                f"Your Flight to {str(dep['Destination']['Name']).lower().capitalize()  } it will leave at {str(datetime.datetime.strptime(dep['Plan'], '%Y-%m-%dT%H:%M:%S' ).time())[0:5]}.",
                 dest,
             )
         )
