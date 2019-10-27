@@ -4,7 +4,7 @@ import datetime
 from pegasus.models.parking import ParkingData
 bp = Blueprint('apv1', __name__, url_prefix='/apiv1')
 
-@bp.route('/parkingfind')
+@bp.route('/parkingfindalex')
 def find_best_parking():
     
     parking_data = ParkingData()
@@ -22,7 +22,7 @@ def find_best_parking():
     })
     count = 0
     for alt in alternatives:
-        if count < 3:
+        if count < 5:
             response_data.append({
                 "name": str(f"P{random.randint(10,20)}"),  #str(alt[0]),
                 "value": str(alt[1]),
@@ -118,3 +118,42 @@ def recomend():
     shop = Shops(current_app.config, current_app.logger)
 
     return { "data": shop.get_recomendation() }
+
+
+@bp.route('/parkingfind')
+def find_best_parking2():
+    
+    parking_data = ParkingData()
+
+    parkingspace =  parking_data.find_best_parkingspace((10,25),1)
+    response_data = []
+
+    dest = Destionations(current_app.config, current_app.logger)
+
+    name = dest.getDestinationName(current_app.fligth_id)
+
+    best_parking, walktime = parkingspace[0]
+    alternatives = parkingspace[1]
+    response_data.append({
+        "name":str(best_parking),
+        "value": str(walktime),
+        "description": "This parkingspcase has the shorstest walking time to your Terminal" ,
+        "topic": "P",
+    })
+    count = 0
+    for alt in alternatives:
+        if count < 3:
+            response_data.append({
+                "name": str(f"P{random.randint(10,20)}"),  #str(alt[0]),
+                "value": str(alt[1]),
+                "description": "This parkingspcase is an alternativ" ,
+                "fligth_dest": name,
+                "topic": "P", 
+            })
+        count += 1
+    
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    } 
+    return ({ "data": response_data }, headers )
+    
