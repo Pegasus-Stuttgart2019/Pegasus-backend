@@ -141,7 +141,7 @@ def get_parking_data_and_format(dest):
         {
             "name": str(best_parking),
             "value": f"{str(walktime)} minutes by feet.",
-            "description": "This parkingspcase has the shorstest walking time to your Terminal",
+            "description": "This parking lot has the shorstest walking time to your terminal",
             "fligth_dest": dest,
             "topic": "P",
         }
@@ -153,7 +153,7 @@ def get_parking_data_and_format(dest):
                 {
                     "name": str(f"P{random.randint(10,20)}"),  # str(alt[0]),
                     "value": f"{str(alt[1])} minutes by feet.",
-                    "description": "This parkingspcase is an alternativ",
+                    "description": "This parking lot is an alternativ",
                     "fligth_dest": dest,
                     "topic": "P",
                 }
@@ -179,12 +179,6 @@ def find_best_parking2():
     destionations = Destionations(current_app.config, current_app.logger)
     shop = Shops(current_app.config, current_app.logger)
 
-    if departures.getDeparturesById(current_app.fligth_id) != {}:
-        dest = Destionations(current_app.config, current_app.logger)
-        fligth = departures.getDeparturesById(current_app.fligth_id)
-        dest = dest.getDestinationCode(fligth["Destination"]["Code"])
-    else:
-        dest = {}
     try:
         response_data = get_parking_data_and_format(dest)
         
@@ -208,6 +202,13 @@ def find_best_parking2():
         )
     except Exception as error:
         print(error)
+
+    if departures.getDeparturesById(current_app.fligth_id) != {}:
+        dest = Destionations(current_app.config, current_app.logger)
+        fligth = departures.getDeparturesById(current_app.fligth_id)
+        dest = dest.getDestinationCode(fligth["Destination"]["Code"])
+    else:
+        dest = {}
 
     return {"data": response_data}
 
