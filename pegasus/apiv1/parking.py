@@ -152,7 +152,7 @@ def get_parking_data_and_format(dest):
             response_data.append(
                 {
                     "name": str(f"P{random.randint(10,20)}"),  # str(alt[0]),
-                    "value": str(alt[1]),
+                    "value": str(alt[1]+ "minutes by feet."),
                     "description": "This parkingspcase is an alternativ",
                     "fligth_dest": dest,
                     "topic": "P",
