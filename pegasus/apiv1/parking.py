@@ -197,6 +197,15 @@ def find_best_parking2():
                 dest,
             )
         )
+        recom = shop.get_recomendation()
+        response_data.append(
+            format_response(
+                recom["Name"],
+                recom["Terminal"],
+                f"Maybe you want to take a look at {recom['Name']} one of your shops",
+                dest,
+            )
+        )
     except Exception as error:
         print(error)
 
@@ -211,3 +220,4 @@ def get_test():
         return {"data": depa.nextFlightTo(code)}
     return {}
 
+ 
