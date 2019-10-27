@@ -35,6 +35,7 @@ class Departures(Airport):
         return response.json()["Items"]
 
     def nextFlightTo(self, destCode):
+        self.time = datetime.datetime.now().timestamp()
         self.departures = self.getDeparturesInSpan(self.time, self.time + 20000)
         flights = []
         maps = {}
