@@ -140,7 +140,7 @@ def get_parking_data_and_format(dest):
     response_data.append(
         {
             "name": str(best_parking),
-            "value": str(walktime),
+            "value": f"{str(walktime)} minutes by feet.",
             "description": "This parkingspcase has the shorstest walking time to your Terminal",
             "fligth_dest": dest,
             "topic": "P",

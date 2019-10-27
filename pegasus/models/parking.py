@@ -44,7 +44,7 @@ class ParkingData():
         """ arrivaleTime: datatime Terminal: 1,2,3"""
         h, m = self._roundTime((10,25))
         best_parkspace = "P07"
-        best_value = 1000
+        best_value = 100
         alternativs = []
 
         for row in self.data:
