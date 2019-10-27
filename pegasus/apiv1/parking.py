@@ -176,12 +176,10 @@ def format_response(name, value, desc, dest):
 def find_best_parking2():
 
     departures = Departures(current_app.config, current_app.logger)
-    destionations = Destionations(current_app.config, current_app.logger)
-    shop = Shops(current_app.config, current_app.logger)
     dest = Destionations(current_app.config, current_app.logger)
-
+    shop = Shops(current_app.config, current_app.logger)
+    response_data = []
     try:
-        response_data = get_parking_data_and_format(dest)
         
         dep = departures.getDeparturesById(current_app.fligth_id)
         response_data.append(
@@ -209,6 +207,8 @@ def find_best_parking2():
         dest = dest.getDestinationCode(fligth["Destination"]["Code"])
     else:
         dest = {}
+    response_data.extend(get_parking_data_and_format(dest))
+        
 
     return {"data": response_data}
 
