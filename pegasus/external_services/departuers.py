@@ -1,5 +1,6 @@
 from pegasus.external_services.airport_legacy import Airport
-import datetime
+import datetime    
+from operator import itemgetter
 
 class Departures(Airport):
 
@@ -29,13 +30,20 @@ class Departures(Airport):
             return None
         return response.json()['Items']
 
+
+
     def nextFlightTo(self, destCode ):
         self.departures = self.getDeparturesInSpan(self.time, self.time+20000)
         flights = []
         for dest in self.departures:
-            if dest['Destination']['Code'].replace(" ", "") == destCode.replace(" ", ""):
-                
-                flights.append( datetime.datetime.strptime(dest['Plan'], '%Y-%m-%dT%H:%M:%S' ).timestamp() )
-        
+            if len(destCode) == 3: 
+                if dest['Destination']['Code'].replace(" ", "") == destCode.replace(" ", ""):
+                    dest['Plan'] = datetime.datetime.strptime(dest['Plan'], '%Y-%m-%dT%H:%M:%S' ).timestamp()
+                    flights.append( dest )
+            if dest['Destination']['Name'].replace(" ", "") == destCode.replace(" ", ""):
+                dest['Plan'] = datetime.datetime.strptime(dest['Plan'], '%Y-%m-%dT%H:%M:%S' ).timestamp()
+                flights.append( dest )
+            
+        newlist = sorted(flights, key=itemgetter('Plan'))
 
-        return self.departures[0:4]
+        return newlist
