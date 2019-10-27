@@ -178,6 +178,7 @@ def find_best_parking2():
     departures = Departures(current_app.config, current_app.logger)
     destionations = Destionations(current_app.config, current_app.logger)
     shop = Shops(current_app.config, current_app.logger)
+    dest = Destionations(current_app.config, current_app.logger)
 
     try:
         response_data = get_parking_data_and_format(dest)
@@ -204,7 +205,6 @@ def find_best_parking2():
         print(error)
 
     if departures.getDeparturesById(current_app.fligth_id) != {}:
-        dest = Destionations(current_app.config, current_app.logger)
         fligth = departures.getDeparturesById(current_app.fligth_id)
         dest = dest.getDestinationCode(fligth["Destination"]["Code"])
     else:
