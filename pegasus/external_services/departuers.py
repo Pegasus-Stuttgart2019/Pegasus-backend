@@ -6,7 +6,7 @@ class Departures(Airport):
     def __init__(self, config, logger):
         super().__init__(config, logger)
         self.time = datetime.datetime.now().timestamp()
-        self.departures = self.getDeparturesInSpan(self.time-1000, self.time+2000)
+        self.departures = self.getDeparturesInSpan(self.time, self.time+2000)
 
     def getDeparturesById(self, id):
         try:
@@ -29,5 +29,13 @@ class Departures(Airport):
             return None
         return response.json()['Items']
 
+    def nextFlightTo(self, destCode ):
+        self.departures = self.getDeparturesInSpan(self.time, self.time+20000)
+        flights = []
+        for dest in self.departures:
+            if dest['Destination']['Code'].replace(" ", "") == destCode.replace(" ", ""):
+                
+                flights.append( datetime.datetime.strptime(dest['Plan'], '%Y-%m-%dT%H:%M:%S' ).timestamp() )
         
-        
+
+        return self.departures[0:4]

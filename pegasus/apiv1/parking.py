@@ -13,7 +13,7 @@ def find_best_parking():
     response_data = []
 
     best_parking, walktime = parkingspace[0]
-    alternatives = parkingspace[1]
+    alternatives = parkingspace[1] 
     response_data.append({
         "name":str(best_parking),
         "value": str(walktime),
@@ -31,10 +31,8 @@ def find_best_parking():
             })
         count += 1
     
-    headers = {
-        'Access-Control-Allow-Origin': '*'
-    } 
-    return ({ "data": response_data }, headers )
+    
+    return { "data": response_data }
 
 from pegasus.external_services.airport_legacy import Airport
 
@@ -119,29 +117,18 @@ def recomend():
 
     return { "data": shop.get_recomendation() }
 
-
-@bp.route('/parkingfind')
-def find_best_parking2():
-    
+def get_parking_data_and_format(dest):
     parking_data = ParkingData()
+    response_data = []
 
     parkingspace =  parking_data.find_best_parkingspace((10,25),1)
-    response_data = []
-    departures = Departures(current_app.config, current_app.logger)
-            
-    if departures.getDeparturesById(current_app.fligth_id) != { }:
-        dest = Destionations(current_app.config, current_app.logger)
-        fligth = departures.getDeparturesById(current_app.fligth_id)
-        name = dest.getDestinationCode(fligth['Destination']['Code'])
-    else:
-        name = {}
     best_parking, walktime = parkingspace[0]
     alternatives = parkingspace[1]
     response_data.append({
         "name":str(best_parking),
         "value": str(walktime),
         "description": "This parkingspcase has the shorstest walking time to your Terminal" ,
-        "fligth_dest": name,
+        "fligth_dest": dest,
         "topic": "P",
     })
     count = 0
@@ -151,13 +138,30 @@ def find_best_parking2():
                 "name": str(f"P{random.randint(10,20)}"),  #str(alt[0]),
                 "value": str(alt[1]),
                 "description": "This parkingspcase is an alternativ" ,
-                "fligth_dest": name,
+                "fligth_dest": dest,
                 "topic": "P", 
             })
         count += 1
+    return response_data
+
+@bp.route('/parkingfind')
+def find_best_parking2():
     
-    headers = {
-        'Access-Control-Allow-Origin': '*'
-    } 
-    return ({ "data": response_data }, headers )
     
+    departures = Departures(current_app.config, current_app.logger)
+            
+    if departures.getDeparturesById(current_app.fligth_id) != { }:
+        dest = Destionations(current_app.config, current_app.logger)
+        fligth = departures.getDeparturesById(current_app.fligth_id)
+        dest = dest.getDestinationCode(fligth['Destination']['Code'])
+    else:
+        dest = {}
+
+    response_data = get_parking_data_and_format(dest)
+
+    return { "data": response_data }
+    
+@bp.route('/test')
+def get_test():
+    depa = Departures(current_app.config, current_app.logger)  
+    return { "data": depa.nextFlightTo('FRA') }
