@@ -191,7 +191,7 @@ def find_best_parking2():
         dep = departures.getDeparturesById(current_app.fligth_id)
         response_data.append(
             format_response(
-                dep["Name"]>,
+                dep["Name"],
                 dep["Plan"],
                 f"Your Flight to {str(dep['Destination']['Name']).lower().capitalize()  } it will leave at {str(datetime.datetime.strptime(dep['Plan'], '%Y-%m-%dT%H:%M:%S' ).time())[0:5]} Uhr.",
                 dest,
