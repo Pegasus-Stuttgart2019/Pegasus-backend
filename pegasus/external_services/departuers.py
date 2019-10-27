@@ -9,12 +9,15 @@ class Departures(Airport):
         self.departures = self.getDeparturesInSpan(self.time-1000, self.time+2000)
 
     def getDeparturesById(self, id):
-        for departure in self.departures:
-            if departure['AmsId'] == id:
-                return departure
-            if departure['Name'] == id or departure['Name'].replace(" ", "") == id:
-                return departure
-        return "False"
+        try:
+            for departure in self.departures:
+                if departure['AmsId'] == id:
+                    return departure
+                if departure['Name'] == id or departure['Name'].replace(" ", "") == id:
+                    return departure
+            return { }
+        except Exception:
+            return { }
 
     def getDeparturesInSpan(self, startTime, endTime, pagesize=2000, page=1):
         """Taks to timestamps and returns arriving fligths between them"""

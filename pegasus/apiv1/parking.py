@@ -127,17 +127,21 @@ def find_best_parking2():
 
     parkingspace =  parking_data.find_best_parkingspace((10,25),1)
     response_data = []
-
-    dest = Destionations(current_app.config, current_app.logger)
-
-    name = dest.getDestinationName(current_app.fligth_id)
-
+    departures = Departures(current_app.config, current_app.logger)
+            
+    if departures.getDeparturesById(current_app.fligth_id) != { }:
+        dest = Destionations(current_app.config, current_app.logger)
+        fligth = departures.getDeparturesById(current_app.fligth_id)
+        name = dest.getDestinationCode(fligth['Destination']['Code'])
+    else:
+        name = {}
     best_parking, walktime = parkingspace[0]
     alternatives = parkingspace[1]
     response_data.append({
         "name":str(best_parking),
         "value": str(walktime),
         "description": "This parkingspcase has the shorstest walking time to your Terminal" ,
+        "fligth_dest": name,
         "topic": "P",
     })
     count = 0
