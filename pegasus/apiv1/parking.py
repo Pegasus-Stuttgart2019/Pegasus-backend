@@ -161,7 +161,7 @@ def find_best_parking2():
 
     return { "data": response_data }
     
-@bp.route('/test')
+@bp.route('/nextFlight')
 def get_test():
     depa = Departures(current_app.config, current_app.logger)  
     return { "data": depa.nextFlightTo('FRA') }
