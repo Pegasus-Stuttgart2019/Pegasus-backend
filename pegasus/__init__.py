@@ -9,16 +9,13 @@ def create_app():
     # create application
     app = Flask(__name__, instance_relative_config=True)
     # read in config
-    
-    
 
     from pegasus.config import Config
+
     app.config.from_object(Config)
     CORS(app)
     app.fligth_id = ""
 
-
-    
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
@@ -27,9 +24,9 @@ def create_app():
 
     from pegasus.apiv1 import parking
 
-    @app.route('/')
+    @app.route("/")
     def hello_page():
-        return 'Hell'
+        return "Hell"
 
     app.register_blueprint(parking.bp)
 
