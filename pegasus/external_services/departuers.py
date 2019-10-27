@@ -35,15 +35,24 @@ class Departures(Airport):
     def nextFlightTo(self, destCode ):
         self.departures = self.getDeparturesInSpan(self.time, self.time+20000)
         flights = []
+        maps = {}
         for dest in self.departures:
             if len(destCode) == 3: 
                 if dest['Destination']['Code'].replace(" ", "") == destCode.replace(" ", ""):
-                    dest['Plan'] = datetime.datetime.strptime(dest['Plan'], '%Y-%m-%dT%H:%M:%S' ).timestamp()
+                    timestamp = datetime.datetime.strptime(dest['Plan'], '%Y-%m-%dT%H:%M:%S' ).timestamp()
+                    maps[timestamp] = dest['Plan']
+                    dest['Plan'] = timestamp
                     flights.append( dest )
             if dest['Destination']['Name'].replace(" ", "") == destCode.replace(" ", ""):
-                dest['Plan'] = datetime.datetime.strptime(dest['Plan'], '%Y-%m-%dT%H:%M:%S' ).timestamp()
+                timestamp = datetime.datetime.strptime(dest['Plan'], '%Y-%m-%dT%H:%M:%S' ).timestamp()
+                maps[timestamp] = dest['Plan']
+                dest['Plan'] = timestamp
                 flights.append( dest )
             
         newlist = sorted(flights, key=itemgetter('Plan'))
+        
+        for entry in newlist:
+            entry['Plan'] = maps[entry['Plan']]
+
 
         return newlist
